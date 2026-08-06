@@ -1,0 +1,11 @@
+```json
+{
+  "expo": {
+    "name": "AuraApp",
+    "slug": "AuraApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light"
+  }
+}
+```
