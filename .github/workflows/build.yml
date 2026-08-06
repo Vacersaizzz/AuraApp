@@ -4,14 +4,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm install
-      - run: npx expo install --fix
-      - run: npx expo build:android
-      - uses: actions/upload-artifact@v4
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Setup Expo and EAS
+        run: |
+          npm install -g expo-cli eas-cli
+          expo login --non-interactive --username ${{ secrets.EXPO_USERNAME }} --password ${{ secrets.EXPO_PASSWORD }}
+      
+      - name: Build Android APK with EAS
+        run: eas build --platform android --local --output=app-release.apk
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
-          path: *.apk
+          path: app-release.apk
