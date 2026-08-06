@@ -1,4 +1,3 @@
-```yaml
 name: Build Android APK
 on: push
 jobs:
@@ -9,10 +8,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm ci
-      - run: npx expo export --platform android
+      - run: npm install
+      - run: npx expo install --fix
+      - run: npx expo build:android
       - uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
-          path: dist/*.apk
-```
+          path: *.apk
